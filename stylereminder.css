@@ -1,0 +1,709 @@
+/* =============================
+   🎀 LEOPARD PINK COQUETTE STYLE
+   ============================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap");
+
+/* Body */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: url("leopard.JPG") repeat;
+  background-size: 320px;
+}
+
+/* Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 240, 245, 0.45);
+  backdrop-filter: blur(1px);
+  z-index: -1;
+}
+
+/* Wrapper */
+.frame-wrapper {
+  width: 95%;
+  max-width: 1000px;
+  margin: auto;
+}
+
+/* CONTENT BOX */
+.content-box {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(18px);
+  border-radius: 25px;
+  border: 2px solid rgba(255, 182, 193, 0.55);
+  box-shadow: 0 10px 25px rgba(255, 160, 176, 0.35);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+
+  width: 100%;
+  min-height: 350px;
+  padding: 30px 40px;
+}
+
+/* LEFT IMAGE */
+.left-side img {
+  width: 200px !important;
+  max-height: 200px !important;
+  object-fit: contain;
+  border-radius: 20px;
+  filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+}
+
+/* RIGHT SIDE */
+.right-side {
+  flex: 1.4;
+  text-align: left;
+}
+
+/* Title */
+.title {
+  font-family: "Great Vibes", cursive;
+  font-size: 55px;
+  color: #d96391;
+  margin-bottom: 20px;
+}
+
+/* Menu Buttons */
+.menu-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 90%;
+}
+
+.menu-btns button {
+  padding: 14px;
+  border: none;
+  border-radius: 15px;
+  font-size: 16px;
+  font-weight: 600;
+  background: #ffb7d5;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.menu-btns button:hover {
+  background: #ff8ebb;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(255, 140, 170, 0.45);
+}
+
+/* =========================================
+   🌙 DARK MODE STYLE
+   ========================================= */
+body.dark::before {
+  background: rgba(25, 20, 28, 0.55);
+  backdrop-filter: blur(2px);
+}
+
+body.dark {
+  background: url("leopard.JPG") repeat;
+  background-size: 320px;
+  color: #ffe6f2;
+}
+
+body.dark .content-box {
+  background: rgba(40, 35, 45, 0.65);
+  border: 2px solid rgba(255, 150, 190, 0.4);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+body.dark .title {
+  color: #ff9dc8;
+  text-shadow: 0 0 8px rgba(255, 150, 200, 0.4);
+}
+
+body.dark .menu-btns button {
+  background: #ff7fb7;
+}
+
+body.dark .menu-btns button:hover {
+  background: #ff5a9e;
+  box-shadow: 0 6px 14px rgba(255, 120, 170, 0.35);
+}
+
+/* =========================================
+   🌗 TOMBOL MODE GELAP/TERANG
+   ========================================= */
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  background: #ff9ec5;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-size: 1.3rem;
+  cursor: pointer;
+  z-index: 999;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transition: 0.25s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.08);
+}
+
+body.dark .theme-toggle {
+  background: #ff6aa7;
+}
+
+
+/* =====================================
+   🎀 COQUETTE LEOPARD PINK — JADWAL SEKOLAH
+   ===================================== */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background: url("leopard.JPG") repeat;
+  background-size: 300px;
+  min-height: 100vh;
+}
+
+/* Soft pink overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(255, 238, 245, 0.78);
+  backdrop-filter: blur(2px);
+  z-index: -1;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  font-size: 24px;
+  background: #ffb6d1;
+  border: none;
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(255, 120, 150, 0.4);
+  transition: 0.2s;
+}
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================
+      FORM CARD (LEFT)
+   ========================== */
+
+.schedule-container {
+  background: rgba(255, 255, 255, 0.78);
+  border-radius: 20px;
+  padding: 22px;
+  border: 2px solid rgba(255, 175, 195, 0.55);
+  box-shadow: 0 10px 25px rgba(255, 160, 176, 0.35);
+}
+
+/* Title */
+.page-title {
+  font-family: "Great Vibes", cursive;
+  font-size: 48px;
+  color: #d96391;
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 18px;
+}
+
+/* Inputs */
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #7a5464;
+}
+input, select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #d9b5c3;
+  background: #fff;
+  font-size: 14px;
+}
+input:focus, select:focus {
+  border-color: #ff8ebb;
+  outline: none;
+  box-shadow: 0 0 5px rgba(255, 120, 150, 0.4);
+}
+
+/* Add / Clear buttons */
+.add-btn, .clear-btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.add-btn { background: #ffb7d5; color: white; }
+.add-btn:hover { background: #ff8ebb; }
+.clear-btn { background: #ffe3ed; color: #c45a7a; }
+.clear-btn:hover { background: #ffdae9; }
+
+/* ==========================
+      DAYS GRID — 2 BARIS
+   ========================== */
+
+.days-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 kolom */
+  gap: 20px;
+  justify-content: end;           /* rata kanan */
+  padding-right: 10px;
+  margin-top: 10px;
+}
+
+/* Kotak masing-masing hari */
+.day-section {
+  background: rgba(255, 255, 255, 0.75);
+  border-radius: 18px;
+  padding: 12px;
+  border: 2px solid rgba(255, 182, 193, 0.55);
+  box-shadow: 0 6px 14px rgba(255, 160, 176, 0.28);
+  min-height: 120px;
+}
+
+/* Nama Hari */
+.day-section h2 {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
+  color: #d96391;
+  margin: 6px 0 12px;
+}
+
+/* Jadwal item */
+.jadwal-item {
+  background: #ffe7f1;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-left: 4px solid #ff9cbc;
+}
+.del-btn {
+  background: #ffb3c9 !important;
+  cursor: pointer;
+  border: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+.del-btn:hover {
+  background: #ff8ebb !important;
+}
+
+/* ==========================
+      NAV BUTTONS BELOW BOX
+   ========================== */
+
+.nav-buttons {
+  width: 100%;
+  margin-top: 35px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  padding-bottom: 40px;
+}
+
+.nav-btn {
+  padding: 12px 24px;
+  border-radius: 15px;
+  border: none;
+  background: #ffb7d5;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
+  font-size: 16px;
+}
+
+.nav-btn:hover {
+  background: #ff8ebb;
+  transform: translateY(-3px);
+}
+
+/* ==========================
+      DARK MODE
+   ========================== */
+
+body.dark {
+  background: #2a2a2a;
+}
+body.dark::before {
+  background: rgba(0,0,0,0.45);
+}
+body.dark .schedule-container,
+body.dark .day-section {
+  background: rgba(40, 40, 40, 0.75);
+}
+body.dark .page-title { color: #ffb7d5; }
+body.dark input,
+body.dark select {
+  background: #3a3a3a;
+  color: white;
+  border-color: #555;
+}
+body.dark .jadwal-item {
+  background: #444;
+  border-left-color: #d87097;
+}
+body.dark .nav-btn {
+  background: #d87097;
+}
+
+/* Google Font — Great Vibes */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
+/* -------------------------------------------
+   🌸 REMINDER STYLE – Pink + Cream Aesthetic
+--------------------------------------------*/
+
+/* Background leopard */
+body.notes-page {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-image: url('leopard.JPG');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(2px);
+  color: #4a3b42;
+}
+
+/* Dark Mode */
+body.notes-page.dark {
+  background-color: #1c1b1b;
+  color: #fce4f0;
+}
+
+/* -------------------------------------------
+   🌸 JUDUL "Catatan Harian" — Great Vibes Style
+--------------------------------------------*/
+.notes-container h1 {
+  font-family: "Great Vibes", cursive;
+  font-size: 3.6rem;
+  font-weight: normal;
+  color: #ff4f9d;
+  text-shadow: 3px 3px 8px rgba(255, 95, 150, 0.4);
+  margin-bottom: 5px;
+}
+
+
+/* -------------------------------------------
+   🌸 Textarea
+--------------------------------------------*/
+textarea {
+  width: 100%;
+  height: 120px;
+  padding: 15px;
+  border-radius: 14px;
+  border: 2px solid #ffb3d6;
+  background: rgba(255, 240, 246, 0.7);
+  resize: none;
+  font-size: 1rem;
+}
+
+body.dark textarea {
+  background: rgba(70, 60, 65, 0.6);
+  border-color: #ff8fc8;
+  color: #fff;
+}
+
+/* -------------------------------------------
+   🌸 Tombol Simpan
+--------------------------------------------*/
+#saveNoteBtn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  background: #ff7db5;
+  color: white;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+#saveNoteBtn:hover {
+  background: #ff4c9d;
+}
+
+/* -------------------------------------------
+   🌸 Daftar Catatan — versi tanpa kotak besar
+--------------------------------------------*/
+#notesList li {
+  list-style: none;
+  background: rgba(255, 226, 232, 0.35);
+  border: 1.5px solid #ffc2d8;
+  padding: 12px 15px;
+  border-radius: 12px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+body.dark #notesList li {
+  background: rgba(80, 70, 75, 0.45);
+  border-color: #ff8fc8;
+}
+
+#notesList li span {
+  cursor: pointer;
+  max-width: 80%;
+}
+
+/* Tombol hapus */
+#notesList li button {
+  background: #ff4c9d;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: white;
+  cursor: pointer;
+}
+
+#notesList li button:hover {
+  background: #d40063;
+}
+
+/* -------------------------------------------
+   🌸 Tombol Navigasi Bawah
+--------------------------------------------*/
+.button-group {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-group button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 14px;
+  background: #ffd3e5;
+  border: 2px solid #ff9bc7;
+  color: #b03e73;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.button-group button:hover {
+  background: #ffb2d6;
+}
+
+/* -------------------------------------------
+   🌸 Theme Toggle Button
+--------------------------------------------*/
+.theme-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: #ff9ecb;
+  padding: 10px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.theme-toggle:hover {
+  background: #ff6fb3;
+}
+
+/* -------------------------------------------
+   🌸 Tutorial Box
+--------------------------------------------*/
+.tutorial-box {
+  margin-top: 25px;
+  padding: 18px;
+  background: rgba(255, 225, 235, 0.55);
+  border-radius: 18px;
+  border: 2px solid #ffc4dd;
+  backdrop-filter: blur(6px);
+}
+
+.tutorial-box h3 {
+  color: #d14f8a;
+}
+
+.tutorial-list li {
+  list-style: none;
+  margin: 6px 0;
+}
+
+.tutorial-list a {
+  text-decoration: none;
+  color: #b52d6d;
+  font-weight: 600;
+}
+
+.tutorial-list a:hover {
+  color: #ff007f;
+}
+
+/* -------------------------------------------
+   🔔 NOTIFY PAGE – Pink Cream Leopard Aesthetic
+--------------------------------------------*/
+
+/* Background Leopard */
+body.notify-page {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-image: url("leopard.JPG");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #4b3440;
+}
+
+/* Dark mode */
+body.notify-page.dark {
+  background-color: #1a1919;
+  background-image: none;
+  color: #ffd7ed;
+}
+
+/* Container */
+.notify-container {
+  background: rgba(255, 232, 240, 0.65);
+  margin: 40px auto;
+  max-width: 600px;
+  padding: 25px;
+  border-radius: 22px;
+  border: 2px solid #ffb2d6;
+  backdrop-filter: blur(8px);
+  text-align: center;
+  box-shadow: 0 0 25px rgba(255, 150, 180, 0.25);
+}
+
+body.dark .notify-container {
+  background: rgba(60, 50, 60, 0.55);
+  border-color: #ff8fc8;
+}
+
+/* Judul */
+.notify-container h1 {
+  font-family: "Great Vibes", cursive;
+  font-size: 3.6rem;
+  color: #ff4f9d;
+  margin-bottom: 10px;
+  text-shadow: 3px 3px 10px rgba(255, 110, 155, 0.4);
+}
+
+/* Paragraf */
+.notify-container p {
+  font-size: 1.05rem;
+  color: #7a4d65;
+}
+
+body.dark .notify-container p {
+  color: #ffb6d9;
+}
+
+/* Tombol Pengingat */
+#activateBtn {
+  background: #ff7db5;
+  border: none;
+  padding: 14px 26px;
+  font-size: 1.2rem;
+  color: white;
+  border-radius: 18px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  margin-top: 10px;
+  box-shadow: 0 0 12px rgba(255, 90, 150, 0.45);
+}
+
+#activateBtn:hover {
+  background: #ff4a96;
+  transform: scale(1.05);
+}
+
+/* List Pengingat */
+#activeReminders {
+  margin-top: 25px;
+  text-align: left;
+}
+
+#activeReminders h3 {
+  color: #d43d89;
+}
+
+#reminderList li {
+  list-style: none;
+  background: rgba(255, 225, 235, 0.6);
+  border: 1.5px solid #ffb6d6;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin: 8px 0;
+  font-size: 1.05rem;
+  backdrop-filter: blur(4px);
+}
+
+body.dark #reminderList li {
+  background: rgba(80, 70, 80, 0.55);
+  border-color: #ff8fc8;
+}
+
+/* Tombol Kembali */
+.button-group button {
+  margin-top: 25px;
+  padding: 12px 20px;
+  background: #ffd3e5;
+  border: 2px solid #ff9bc7;
+  border-radius: 14px;
+  color: #b03e73;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.button-group button:hover {
+  background: #ffb2d6;
+}
+
+/* Tombol Tema */
+.theme-toggle {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  border: none;
+  background: #ff9ecb;
+  padding: 10px 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 99;
+}
+
+.theme-toggle:hover {
+  background: #ff6fb3;
+}

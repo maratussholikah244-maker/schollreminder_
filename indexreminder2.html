@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jadwal Sekolah — Coquette</title>
+  <link rel="stylesheet" href="stylereminder.css">
+</head>
+<body class="schedule-page">
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+
+  <div style="max-width:1100px;margin:20px auto;display:flex;gap:24px;align-items:flex-start;flex-wrap:wrap;">
+    <!-- LEFT: Form -->
+    <aside class="schedule-container" style="flex:0 0 360px;">
+      <h1 class="page-title">Jadwal Sekolah</h1>
+
+      <div class="input-group">
+        <label style="display:block;margin:8px 0 4px;font-weight:600;color:#7a5464">Hari</label>
+        <select id="daySelect" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;">
+          <option value="">Pilih hari</option>
+          <option>Senin</option><option>Selasa</option><option>Rabu</option>
+          <option>Kamis</option><option>Jumat</option><option>Sabtu</option>
+        </select>
+
+        <label style="display:block;margin:12px 0 4px;font-weight:600;color:#7a5464">Jam mulai — selesai</label>
+        <div style="display:flex;gap:8px">
+          <input type="time" id="startTime" style="flex:1;padding:10px;border-radius:10px;border:1px solid #ddd;">
+          <input type="time" id="endTime" style="flex:1;padding:10px;border-radius:10px;border:1px solid #ddd;">
+        </div>
+
+        <label style="display:block;margin:12px 0 4px;font-weight:600;color:#7a5464">Mata Pelajaran</label>
+        <input type="text" id="subject" placeholder="Contoh: Matematika" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;">
+
+        <label style="display:block;margin:12px 0 4px;font-weight:600;color:#7a5464">Guru / Kelas</label>
+        <input type="text" id="teacher" placeholder="Contoh: Bu Rina / XI IPA 1" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;">
+
+        <label style="display:block;margin:12px 0 4px;font-weight:600;color:#7a5464">Catatan (opsional)</label>
+        <input type="text" id="note" placeholder="Contoh: Bawa buku" style="width:100%;padding:10px;border-radius:10px;border:1px solid #ddd;">
+
+      </div>
+
+      <div class="button-group" style="margin-top:14px;">
+        <button class="add-btn" id="addBtn">➕ Tambahkan</button>
+        <button class="clear-btn" id="clearBtn">Kosongkan Semua</button>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Grid days -->
+    <section style="flex:1; min-width:480px;">
+      <div class="days-grid" id="daysGrid" style="display:grid;grid-template-columns:repeat(6,1fr);gap:14px;">
+        <!-- JS akan membuat kolom hari di sini -->
+      </div>
+    </section>
+  </div>
+<div class="nav-buttons">
+  <button onclick="window.location.href='indexreminder1.html'" class="nav-btn menu-btn">⬅ Menu</button>
+  <button onclick="window.location.href='indexreminder3.html'" class="nav-btn next-btn">Reminder ➜</button>
+</div>
+
+  <script>
+    // theme toggle (uses class .dark)
+    function toggleTheme(){ document.body.classList.toggle("dark"); }
+
+    // days
+    const DAYS = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"];
+
+    // build day columns
+    const grid = document.getElementById('daysGrid');
+    grid.innerHTML = DAYS.map(d => `
+      <div class="day-section" data-day="${d}">
+        <h2>${d}</h2>
+        <div class="items" aria-live="polite"></div>
+      </div>
+    `).join('');
+
+    // storage key
+    const STORAGE_KEY = 'jadwal_schedules_v1';
+    let schedules = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+
+    // helper
+    function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":"&#39;"}[m])); }
+
+    function render(){
+      document.querySelectorAll('.day-section').forEach(col=>{
+        col.querySelector('.items').innerHTML = '';
+      });
+      // sort by day index and time
+      schedules.sort((a,b)=>{
+        const di = DAYS.indexOf(a.day), dj = DAYS.indexOf(b.day);
+        if(di!==dj) return di-dj;
+        return (a.start||'') > (b.start||'') ? 1 : -1;
+      });
+
+      schedules.forEach((s, idx)=>{
+        const container = document.querySelector(`.day-section[data-day="${s.day}"] .items`);
+        if(!container) return;
+        const item = document.createElement('div');
+        item.className = 'jadwal-item';
+        item.innerHTML = `
+          <div style="display:flex;justify-content:space-between;align-items:start;gap:8px;">
+            <div>
+              <div style="font-weight:700;color:#7d5f67">${escapeHtml(s.subject)}</div>
+              <div style="font-size:13px;color:#9a7f86;margin-top:4px">${escapeHtml(s.teacher)} · ${escapeHtml(s.start)}—${escapeHtml(s.end)}</div>
+              <div style="font-size:13px;color:#8c6f78;margin-top:6px">${escapeHtml(s.note)}</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              <button class="del-btn" data-idx="${idx}" title="Hapus" style="background:#f7a7c2;border:none;padding:6px;border-radius:8px;cursor:pointer;">🗑</button>
+            </div>
+          </div>
+        `;
+        container.appendChild(item);
+      });
+
+      // attach delete listeners
+      document.querySelectorAll('.del-btn').forEach(b=>{
+        b.onclick = (e)=>{
+          const i = Number(e.currentTarget.dataset.idx);
+          if(!Number.isNaN(i)) {
+            if(confirm('Hapus jadwal ini?')) {
+              schedules.splice(i,1);
+              localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
+              render();
+            }
+          }
+        };
+      });
+    }
+
+    // initial render
+    render();
+
+    // form handlers
+    document.getElementById('addBtn').addEventListener('click', ()=>{
+      const day = document.getElementById('daySelect').value;
+      const start = document.getElementById('startTime').value;
+      const end = document.getElementById('endTime').value;
+      const subject = document.getElementById('subject').value.trim();
+      const teacher = document.getElementById('teacher').value.trim();
+      const note = document.getElementById('note').value.trim();
+
+      if(!day){ alert('Pilih hari dulu.'); return; }
+      if(!subject){ alert('Isi mata pelajaran.'); return; }
+
+      schedules.push({ day, start, end, subject, teacher, note });
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(schedules));
+
+      // clear inputs
+      document.getElementById('subject').value = '';
+      document.getElementById('teacher').value = '';
+      document.getElementById('note').value = '';
+      document.getElementById('startTime').value = '';
+      document.getElementById('endTime').value = '';
+      document.getElementById('daySelect').value = '';
+
+      render();
+    });
+
+    document.getElementById('clearBtn').addEventListener('click', ()=>{
+      if(confirm('Hapus semua jadwal?')){
+        schedules = [];
+        localStorage.removeItem(STORAGE_KEY);
+        render();
+      }
+    });
+
+  </script>
+
+</body>
+</html>

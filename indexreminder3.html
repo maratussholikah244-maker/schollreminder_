@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Catatan Harian</title>
+  <link rel="stylesheet" href="stylereminder.css">
+</head>
+<body class="notes-page">
+  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+
+  <div class="notes-container">
+    <h1>📝 Catatan Harian</h1>
+    <p>Tulis, edit, dan hapus catatanmu dengan gaya elegan ✨</p>
+
+    <textarea id="dailyNoteInput" placeholder="Tulis catatan baru di sini..."></textarea>
+    <button id="saveNoteBtn">💾 Simpan Catatan</button>
+
+    <div id="savedNotes">
+      <h3>Catatan Tersimpan:</h3>
+      <ul id="notesList"></ul>
+    </div>
+
+    <!-- =========================
+         📘 TUTORIAL BELAJAR
+    ========================== -->
+    <div class="tutorial-box">
+      <h3>📘 Tutorial Belajar</h3>
+      <p>Pilih website terbaik untuk belajar pemrograman:</p>
+
+      <ul class="tutorial-list">
+        <li><a href="https://www.w3schools.com" target="_blank">🌐 W3Schools – Belajar HTML, CSS, JS</a></li>
+        <li><a href="https://developer.mozilla.org" target="_blank">📚 MDN Web Docs – Dokumentasi Web Lengkap</a></li>
+        <li><a href="https://www.freecodecamp.org" target="_blank">🎓 FreeCodeCamp – Belajar sambil praktek + sertifikat</a></li>
+        <li><a href="https://www.geeksforgeeks.org" target="_blank">💡 GeeksForGeeks – Algoritma dan Coding</a></li>
+        <li><a href="https://www.codecademy.com" target="_blank">🧪 Codecademy – Belajar interaktif</a></li>
+        <li><a href="https://chatgpt.com" target="_blank">🤖 ChatGPT – Asisten belajar dengan AI</a></li>
+      </ul>
+    </div>
+    <!-- ======================= -->
+
+    <div class="button-group">
+      <button onclick="window.location.href='indexreminder2.html'">⬅ Jadwal</button>
+      <button onclick="window.location.href='indexreminder4.html'">➡ Pengingat</button>
+    </div>
+  </div>
+
+  <script>
+    // 🌗 Tema
+    function toggleTheme(){
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme",document.body.classList.contains("dark")?"dark":"light");
+    }
+    if(localStorage.getItem("theme")==="dark")document.body.classList.add("dark");
+
+    // 📝 Catatan
+    const input = document.getElementById("dailyNoteInput");
+    const list = document.getElementById("notesList");
+    const saveBtn = document.getElementById("saveNoteBtn");
+    let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+    function renderNotes(){
+      list.innerHTML = "";
+      if(notes.length === 0) list.innerHTML = "<p>Belum ada catatan 🌸</p>";
+      notes.forEach((note, index)=>{
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span onclick="editNote(${index})">${note}</span>
+          <button onclick="deleteNote(${index})">🗑️</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    saveBtn.addEventListener("click",()=>{
+      if(input.value.trim()!==""){
+        notes.push(input.value.trim());
+        localStorage.setItem("notes",JSON.stringify(notes));
+        input.value="";
+        renderNotes();
+      }
+    });
+
+    function deleteNote(index){
+      if(confirm("Hapus catatan ini?")){
+        notes.splice(index,1);
+        localStorage.setItem("notes",JSON.stringify(notes));
+        renderNotes();
+      }
+    }
+
+    function editNote(index){
+      const newText = prompt("Edit catatan:", notes[index]);
+      if(newText!==null){
+        notes[index]=newText.trim();
+        localStorage.setItem("notes",JSON.stringify(notes));
+        renderNotes();
+      }
+    }
+
+    renderNotes();
+  </script>
+</body>
+</html>

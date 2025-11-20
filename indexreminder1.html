@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Planner Reminder</title>
+  <link rel="stylesheet" href="stylereminder.css" />
+</head>
+
+<body class="menu-page">
+
+  <!-- 🌗 Tombol Dark/Light Mode -->
+  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+
+  <div class="frame-wrapper">
+    <div class="content-box">
+
+      <div class="left-side">
+        <img src="book.JPG" alt="Planner" />
+      </div>
+
+      <div class="right-side">
+        <h1 class="title">Menu Planner Reminder</h1>
+
+        <div class="menu-btns">
+          <button onclick="window.location.href='indexreminder2.html'">📚 Jadwal Sekolah</button>
+          <button onclick="window.location.href='indexreminder3.html'">📝 Catatan Harian</button>
+          <button onclick="window.location.href='indexreminder4.html'">🔔 Pengingat</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 🌗 Dark Light Mode
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme",
+        document.body.classList.contains("dark") ? "dark" : "light"
+      );
+    }
+
+    // simpan tema
+    if (localStorage.getItem("theme") === "dark") {
+      document.body.classList.add("dark");
+    }
+  </script>
+
+</body>
+</html>

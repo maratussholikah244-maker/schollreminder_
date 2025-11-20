@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pengingat & Notifikasi</title>
+  <link rel="stylesheet" href="stylereminder.css">
+</head>
+<body class="notify-page">
+  <button class="theme-toggle" onclick="toggleTheme()">🌗</button>
+
+  <div class="notify-container">
+    <h1>🔔 Pengingat & Notifikasi</h1>
+    <p>Alarm otomatis dengan suara bawaan 🎵</p>
+
+    <div class="alarm-settings">
+      <button id="activateBtn" onclick="activateNotifications()">▶️ Aktifkan Pengingat</button>
+      <p id="statusText">Alarm belum aktif.</p>
+    </div>
+
+    <div id="activeReminders">
+      <h3>📅 Pengingat Aktif Hari Ini:</h3>
+      <ul id="reminderList"></ul>
+    </div>
+
+    <div class="button-group">
+      <button onclick="window.location.href='indexreminder1.html'">🏠 Menu Utama</button>
+    </div>
+  </div>
+
+  <!-- 🎵 Suara alarm -->
+  <audio id="alarmAudio" src="alaramp.mp3" preload="auto"></audio>
+
+  <script>
+    /* 🌗 THEME */
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme",
+        document.body.classList.contains("dark") ? "dark" : "light"
+      );
+    }
+    if(localStorage.getItem("theme")==="dark") document.body.classList.add("dark");
+
+    /* 🔔 LOAD DATA JADWAL */
+    const STORAGE_KEY = "jadwal_schedules_v1";
+    let schedules = JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    const alarmAudio = document.getElementById("alarmAudio");
+
+    // Tambahkan flag biar alarm tidak bunyi dua kali
+    schedules = schedules.map(s => ({ ...s, triggered: false }));
+
+    function renderReminders(){
+      const reminderList = document.getElementById("reminderList");
+      reminderList.innerHTML = "";
+
+      const today = new Date().toLocaleDateString("id-ID", { weekday: "long" });
+
+      const todays = schedules.filter(s => s.day.toLowerCase() === today.toLowerCase());
+
+      if(todays.length === 0){
+        reminderList.innerHTML = "<p>Tidak ada pengingat hari ini 🌸</p>";
+      } else {
+        todays.forEach(s=>{
+          const li = document.createElement("li");
+          li.textContent = `${s.start} - ${s.subject} (${s.teacher})`;
+          reminderList.appendChild(li);
+        });
+      }
+    }
+
+    /* ⭐ AKTIFKAN SISTEM NOTIFIKASI */
+    function activateNotifications(){
+      document.getElementById("statusText").textContent =
+        "✅ Alarm aktif dan menunggu jadwal...";
+      alert("🔔 Pengingat diaktifkan! Jangan tutup tab ini.");
+
+      /* Izin audio */
+      alarmAudio.play().catch(()=>{});
+      alarmAudio.pause();
+      alarmAudio.currentTime = 0;
+
+      renderReminders();
+
+      /* Izin notifikasi */
+      if(Notification.permission !== "granted"){
+        Notification.requestPermission();
+      }
+
+      if(Notification.permission === "denied"){
+        alert("⚠️ Kamu memblokir notifikasi! Aktifkan lewat Settings > Site Settings > Notifications.");
+      }
+
+      /* Cegah tab tidur */
+      if("wakeLock" in navigator){
+        navigator.wakeLock.request("screen").catch(()=>{});
+      }
+
+      /* LOOP ALARM tanpa delay */
+      setInterval(() => {
+        const now = new Date();
+        const day = now.toLocaleDateString("id-ID",{ weekday:"long" });
+        
+        // Jam yang stabil dan presisi
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const timeNow = `${hours}:${minutes}`;
+
+        schedules.forEach(s => {
+          // Cek hari
+          if (s.day.toLowerCase() !== day.toLowerCase()) return;
+
+          // Cek waktu >= (untuk mencegah delay 1 menit dari browser)
+          if (timeNow >= s.start && !s.triggered) {
+
+            s.triggered = true; // tandai sudah bunyi
+
+            // Notifikasi
+            new Notification(`⏰ ${s.subject}`, {
+              body: `Saatnya ${s.subject} bersama ${s.teacher}!`,
+              icon: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png"
+            });
+
+            // Bunyi alarm
+            alarmAudio.currentTime = 0;
+            alarmAudio.play();
+          }
+        });
+
+        // Alarm jam 20:00 (jika kamu memang butuh)
+        if (timeNow === "20:00") {
+          new Notification("⏰ Alarm Jam 20:00", {
+            body: "Sudah jam 8 malam! Jangan lupa istirahat 💖",
+            icon: "https://cdn-icons-png.flaticon.com/512/2921/2921822.png"
+          });
+
+          alarmAudio.currentTime = 0;
+          alarmAudio.play();
+        }
+
+      }, 1000);
+    }
+
+    renderReminders();
+  </script>
+
+</body>
+</html>
